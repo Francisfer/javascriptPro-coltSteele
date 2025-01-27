@@ -51,3 +51,40 @@ const triangle = new Triangle(5, 12);
 
 console.log(triangle); // Triangle {a: 5, b: 12}
 console.log(triangle.getHypotenuse()); // 13
+
+/* --------------------------------- Exercise --------------------------------- */
+
+class BankAccount {
+  constructor(balance = 0, accountHolder, accountNumber) {
+    this.balance = balance;
+    this.accountHolder = accountHolder;
+    this.accountNumber = accountNumber;
+  }
+
+  deposit(amount) {
+    if (amount < 0 || typeof amount !== "number")
+      throw new Error(`Deposit positive numbers`);
+
+    this.balance += amount;
+    console.log(`New balance after deposit: ${this.balance}`);
+  }
+
+  withdraw(amount) {
+    if (this.balance < amount)
+      throw new Error(`Insufficient Funds: ${this.balance}`);
+    this.balance -= amount;
+    console.log(`New balance after withdrawal: ${this.balance}`);
+  }
+}
+
+const user = new BankAccount(1000, "Vlad", 123);
+
+user.deposit(200); // New balance after deposit: 1200
+
+user.withdraw(1200); // New balance after withdrawal: 0
+
+// user.withdraw(1); // Error: Insufficient Funds: 0
+
+user.deposit(2000); // New balance after deposit: 2000
+
+user.deposit("a"); // Error: Deposit positive numbers
