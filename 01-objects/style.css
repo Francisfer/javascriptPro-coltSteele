@@ -1,0 +1,16 @@
+body {
+  height: 100vh;
+  background-color: #2e2e2e;
+}
+
+.container {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  flex-grow: 0;
+}
