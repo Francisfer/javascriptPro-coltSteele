@@ -177,7 +177,7 @@ class UserProfile {
     return this._email;
   }
   set birthdate(date) {
-    if (typeof date == !"string") throw new Error("Invalid birthdate.");
+    if (typeof date !== "string") throw new Error("Invalid birthdate.");
 
     const [year, month, day] = date.trim().split("-");
 
@@ -194,4 +194,5 @@ class UserProfile {
   }
 }
 
-const user = new UserProfile("Francis", "something@something", "1133-12-01");
+const user = new UserProfile("john_doe", "something@something", "1133-12-01");
+console.log(user.userName);
