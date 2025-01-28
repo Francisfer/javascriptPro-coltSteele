@@ -116,3 +116,82 @@ console.log(francis.fullName); // Francisco Francisco
 
 console.log(francis.firstName); // Francisco Ferreira
 console.log(francis.lastName); // Francisco Ferreira
+
+/* --------------------------------- Exercise --------------------------------- */
+
+/* 
+
+Getters and Setters exercise
+
+-> Create a class UserProfile that encapsulates a user's profile information.
+
+
+-> This class should have fields for username, email, and birthdate. 
+
+  -> Use getters and setters when creating these fields. 
+  
+  -> Use setters to validate that the username is a non-empty string, the email includes an '@' symbol, and the birthdate is a valid date string.
+
+
+
+-> If the username is an empty string or not a string - throw an error with the message of 'Invalid username.'
+
+
+-> If the email does not include a @ character - throw an error with the message of 'Invalid email.'
+
+
+-> If the birthdate is not a valid date string, throw an error with the message of 'Invalid birthdate.' 
+
+  -> Note that the valid expected date string format is YYYY-MM-DD . For example, '1990-12-31' is a valid date string.
+
+
+-> Make sure to also use the setters that you write (with the implemented validations) in the constructor function of the class, so it also validates the fields when the object is initially created from the class (i.e., when the constructor function is initially executed).
+
+*/
+console.log(" ---------- Exercise ----------");
+
+class UserProfile {
+  _userName;
+  _email;
+  _birthdate;
+
+  constructor(userName, email, birthdate) {
+    this.userName = userName;
+    this.email = email;
+    this.birthdate = birthdate;
+  }
+  set userName(name) {
+    if (typeof name !== "string" || name.length === 0)
+      throw new Error("Invalid username.");
+    this._userName = name;
+  }
+  get userName() {
+    return this._userName;
+  }
+
+  set email(email) {
+    if (!email.includes("@")) throw new Error("Invalid email.");
+    this._email = email;
+  }
+  get email() {
+    return this._email;
+  }
+  set birthdate(date) {
+    if (typeof date == !"string") throw new Error("Invalid birthdate.");
+
+    const [year, month, day] = date.trim().split("-");
+
+    if (year.length !== 4 || month.length !== 2 || day.length !== 2)
+      throw new Error("Invalid birthdate.");
+
+    if (year < 0 || month < 0 || month > 12 || day < 0 || day > 31)
+      throw new Error("Invalid birthdate.");
+
+    this._birthdate = date;
+  }
+  get birthdate() {
+    return this._birthdate;
+  }
+}
+
+const user = new UserProfile("Francis", "something@something", "1133-12-01");

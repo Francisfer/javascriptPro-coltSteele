@@ -50,4 +50,36 @@ console.log(Cat.numOfCats); // 1
 const cat2 = new Cat("Felix");
 console.log(Cat.numOfCats); // 2
 
-/* --------------------------------- Public Fields --------------------------------- */
+/* --------------------------------- Private Fields and Methods --------------------------------- */
+
+/* 
+
+--> Private instance class fields provide a way to maintain encapsulation and not allow external access from other developers or other parts of the code base.
+
+--> Private methods are the same thing.
+
+
+*/
+
+class Circle {
+  #radius;
+  constructor(radius) {
+    this.#radius = radius;
+  }
+  getRadius() {
+    return this.#radius;
+  }
+  #privateMethod() {
+    console.log("PRIVATE METHOD CALLED");
+  }
+
+  // Way to go around:
+  publicMethod() {
+    return this.#privateMethod();
+  }
+}
+
+const circle = new Circle(4);
+console.log(circle.getRadius()); // 4
+
+circle.publicMethod(); // PRIVATE METHOD CALLED
