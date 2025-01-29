@@ -63,12 +63,21 @@ const parent1 = {
   sing() {
     console.log("la la la");
   },
-  __proto__: grandParent,
+  // __proto__: grandParent,
 };
 
 const child1 = {
   num: 2,
-  __proto__: parent1,
+  // __proto__: parent1,
 };
 
-// child.greet(); This only works in the browser.
+// child.greet();
+
+// This only works in the browser. __proto__ is a deprecated property, to do this we would have to use Object.setPrototypeOf()
+
+Object.setPrototypeOf(child1, parent1); // Set child1's prototype to parent1
+Object.setPrototypeOf(parent1, grandParent); // Set parent1's prototype to grandParent
+
+console.log(child1.greet()); // "Hello from grandparent"
+console.log(child1.sing()); // "la la la"
+console.log(child1.color); // "purple"
