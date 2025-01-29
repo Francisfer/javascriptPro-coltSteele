@@ -39,6 +39,7 @@
 
 */
 
+// This is a factory that describes the shape of a dog object.
 function Dog(name, breed) {
   this.name = name;
   this.breed = breed;
@@ -49,4 +50,4 @@ function Dog(name, breed) {
 const wyatt = new Dog("Wyatt", "Golden");
 const elton = new Dog("Elton", "Mutt");
 
-console.log(wyatt, elton); // Two Dogs, similar to instances.
+console.log(wyatt, elton); // Two Dog objects, similar to instances.
