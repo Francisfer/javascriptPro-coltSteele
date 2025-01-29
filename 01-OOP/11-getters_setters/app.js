@@ -196,3 +196,7 @@ class UserProfile {
 
 const user = new UserProfile("john_doe", "something@something", "1133-12-01");
 console.log(user.userName);
+
+const date = "1990-12-01";
+const parsedDate = new Date(date);
+console.log(parsedDate.getTime());
