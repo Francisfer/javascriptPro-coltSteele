@@ -65,6 +65,10 @@ console.log(fluffy.dance()); // Meow, I am Fluffy and I like to Tango
   -> If we take a look on the window object, we can see that, along with everything else, it has our function.
 
 
+
+--> Now it makes more sense that the value of the "this" keyword depends on the object that the method or function is called on.
+
+
 */
 
 function greet() {
