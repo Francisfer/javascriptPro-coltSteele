@@ -80,44 +80,155 @@ console.log(Dog.prototype.isPrototypeOf(GuideDog)); // false, GuideDog is not an
 
 /* 
 
---> The prototype property is unique to functions.
+1. The prototype Property (Unique to Functions).
 
-  -> It is going to point to the object that will be assigned as the prototype object of instances created from that function (Dog constructor).
 
-  -> This is a long way of saying that we can add methods to the prototype property of a function, which will be set as the prototype for instances of Dog.
+  -> In JavaScript, only functions have a prototype property.
 
-  -> The __proto__ property is an internal property of every object in javascript, which points to its prototype object.
+  -> This property is an object that will be used as the prototype for all instances created from that function.
 
-    -> In the case of object literals, it points to the Object prototype.
 
-      -> If we want to add a prototype in the middle, so that one object has access to the functionality of another object we use Object.setPrototypeOf(this obj, to this obj).
 
-      -> What this does it to set the __proto__ of the second object to point to the first.
+--> What happens in the example?
+
+  -> Dog.prototype is an object that stores methods and properties that all Dog instances share.
+
+  -> dog1 and dog2 do not have a bark method directly on them.
+
+  -> Instead, they inherit it from Dog.prototype.
 
 
 */
 
-const grandParent = {
-  greet() {
-    console.log("Hello from grandparent");
-  },
+// Example:
+
+function Dog1(name) {
+  this.name = name;
+}
+
+// Adding a method to the prototype
+Dog1.prototype.bark = function () {
+  console.log(`${this.name} says woof!`);
 };
 
-const parent1 = {
+// Creating instances
+const dog1 = new Dog1("Rex");
+const dog2 = new Dog1("Buddy");
+
+dog1.bark(); // "Rex says woof!"
+dog2.bark(); // "Buddy says woof!"
+
+/* 
+
+2. The __proto__ Property (Internal Property of Objects).
+
+  -> Every JavaScript object has an internal property called __proto__ (also called [[Prototype]]).
+
+  -> This property links an object to another object, which acts as its prototype.
+
+
+
+--> What does that mean?
+
+  -> dog1 and dog2 don’t have their own bark method.
+
+  -> When you call dog1.bark(), JavaScript looks at dog1 and doesn't find bark there.
+
+  -> Then, it looks at dog1.__proto__, which points to Dog1.prototype, and finds the method there.
+
+  -> Object literals ({}) also have a __proto__, which by default points to Object.prototype:
+
+*/
+
+console.log(dog1.__proto__ === Dog.prototype); // true
+console.log(dog2.__proto__ === Dog.prototype); // true
+
+const obj = {};
+console.log(obj.__proto__ === Object.prototype); // true
+
+/* --------------------------------- Useful Prototype Methods --------------------------------- */
+
+/* 
+
+1. Object.create()
+
+  -> This method will create a new object but it expects an argument.
+
+  -> It will use that argument object as the prototype of the new object it creates.
+
+  -> Object.create() is a way to manually set the prototype of an object.
+
+*/
+
+const person = {
+  sing() {
+    console.log("la la la");
+  },
+  isHuman: true,
+};
+
+// When we use Object.create() it makes us a new empty object. However, if we look at the prototype of this new object we can see it is the person object.
+
+const newPerson = Object.create(person);
+
+console.log(newPerson.__proto__); // {isHuman: true, sing: ƒ}
+
+newPerson.sing(); // la la la
+
+// We could now fill that object.
+newPerson.name = "Tom";
+
+console.log(newPerson.name); // Tom
+
+/* 
+
+2. Object.getPrototypeOf()
+
+  -> We provide an object and it will return the prototype of that object.
+
+  -> This is what we should use instead of __proto__.
+
+*/
+
+console.log(Object.getPrototypeOf(newPerson)); // {isHuman: true, sing: ƒ}
+
+// same as:
+
+console.log(newPerson.__proto__); // {isHuman: true, sing: ƒ}
+
+/* 
+
+3. Object.setPrototypeOf()
+
+  -> This one we already know.
+
+  -> The first parameter is the object we want to set the prototype, the second is the object that we want the prototype to be.
+
+*/
+
+const parent = {
   color: "purple",
   sing() {
     console.log("la la la");
   },
 };
 
-const child1 = {
+const child = {
   num: 2,
 };
 
-console.log(child1.__proto__); // Object - top of the chain directly
+console.log(Object.getPrototypeOf(child)); // Object - the top of the chain
 
-Object.setPrototypeOf(child1, parent1);
+Object.setPrototypeOf(child, parent);
 
-console.log(child1.__proto__); // {color: 'purple', sing: ƒ} - Now the __proto__ of parent1 is in the middle.
+console.log(Object.getPrototypeOf(child)); // {color: 'purple', sing: ƒ} - parent object.
 
-console.log(parent);
+/* 
+
+4. isPrototypeOf()
+
+  -> To check if an object is the prototype of another.
+
+*/
+
+console.log(parent.isPrototypeOf(child)); // true
