@@ -59,6 +59,7 @@ const getResponse = async function (url) {
     console.log("REQUEST 4 FINISHED");
 
     const results = [res1, res2, res3];
+    console.log(results);
   } catch (error) {
     console.log("ERROR!!!", error);
   }
