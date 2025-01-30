@@ -5,7 +5,7 @@
 // 1.
 async function showNumberTrivia(number) {
   const response = await fetch(`http://numbersapi.com/${number}?json`);
-
+  console.log(response);
   const data = await response.json();
 
   console.log(data.text);
@@ -50,7 +50,7 @@ async function showNumberAll(...numbers) {
     const fulfilled = await Promise.allSettled(
       response
         .filter((res) => res.value.ok === true)
-        .map(async (res) => await res.json())
+        .map((res) => console.log(res))
     );
 
     const rejected = response.filter((res) => res.value.ok === false);
