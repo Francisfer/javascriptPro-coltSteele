@@ -1,5 +1,5 @@
 "use strict";
-/* --------------------------------- Promise.all() --------------------------------- */
+/* --------------------------------- Promise.all() - many calls in sequence) --------------------------------- */
 
 /* 
 
@@ -16,8 +16,10 @@
 
 --> This is useful when we want to run some code only when all of the promises are resolved.
 
-  -> But if one of them is resolved to rejected, the promise that Promise.all() returns is also rejected. 
+  -> But if one of them is resolved to rejected, the whole promise that Promise.all() returns is also rejected. 
 
+
+--> Don't forget that the order matters. Promise.all() runs the promises in parallel (at the same time), but returns them in sequence as they where in the array.
 */
 
 const BASE_URL = "https://pokeapi.co/api/v2/pokemon";

@@ -3,49 +3,49 @@
 
 /* 
 
---> 
+--> Sometimes we might want to send a lot of async operations where some might work, some may not.
+
+--> Some promises will be resolved and some will be rejected.
+
+  -> In this situation, we use Promise.allSettled().
+
+  -> It also accepts an array of promises and returns one promise (one array).
+
+  -> The difference is that the promise resolves after all the given promises are done / settled. Meaning they rejected or fulfilled. 
+
+  -> After this, we receive an array with all the promises and we can do something like filter the ones that where fulfilled.
+
+
 
 */
 
-const BASE_URL = "https://pokeapi.co/api/v2/pokemon";
-const url = `${BASE_URL}/1`;
+async function allSettledDemo() {
+  const GITHUB_BASE_URL = "https://api.github.com";
 
-// --------------------------------- With .then() and .catch() --------------------------------- //
+  let elieP = fetch(`${GITHUB_BASE_URL}/users/elie`);
 
-const lotsOfFetchCalls = [
-  fetch(`${BASE_URL}/1`),
-  fetch(`${BASE_URL}/2`),
-  fetch(`${BASE_URL}/3`),
-  fetch(`${BASE_URL}/4`),
-  fetch(`${BASE_URL}/5`),
-  fetch(`${BASE_URL}/6`),
-];
+  let joelP = fetch(`${GITHUB_BASE_URL}/users/joelburton`);
 
-console.log(lotsOfFetchCalls); // (6) [Promise, Promise, Promise, Promise, Promise, Promise]
+  let badUrl = fetch(`https://definitelynotarealsite.com`);
 
-// If we want some code to run when all of the promises are done, we use Promise.all()
+  let coltP = fetch(`${GITHUB_BASE_URL}/users/colt`);
 
-Promise.all(lotsOfFetchCalls)
-  .then((results) => {
-    console.log("Promise.all() is done and resolved");
-    console.log(results);
-  })
-  .catch((error) => {
-    console.log("One of the promises rejected");
-    console.warn(error);
+  let anotherBadUrl = fetch(`https://definitelynotarealsite.com`);
+
+  let results = await Promise.allSettled([
+    elieP,
+    joelP,
+    badUrl,
+    coltP,
+    anotherBadUrl,
+  ]);
+
+  console.log(results);
+
+  const fulfilled = results.filter((result) => {
+    return result.status === "fulfilled";
   });
-
-// --------------------------------- With async await --------------------------------- //
-
-async function getLotsOfPokemon() {
-  try {
-    const results = await Promise.all(lotsOfFetchCalls);
-    console.log("Promise.all() is done and resolved");
-    console.log(results);
-  } catch (error) {
-    console.log("One of the promises rejected");
-    console.warn(error);
-  }
+  console.log(fulfilled);
 }
 
-getLotsOfPokemon();
+allSettledDemo();
