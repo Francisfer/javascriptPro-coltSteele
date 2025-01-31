@@ -3,38 +3,49 @@
 
 /* 
 
---> Another pattern that we might want is the ability to send out a bunch of async operations and then handle the very first one that is either rejected of fulfilled.
+--> Promise.any() is a new Promise utility method that takes an array (or iterable) of promises and returns a promise that will be fulfilled by the very first promise, in that iterable, that is settled with fulfilled.
 
-  -> For that we have the Promise.race() helper.
+  -> Or rejected if all of the promises in the iterable are rejected.
 
-  -> It also accepts an array of promises and returns a new promise that resolves or rejects as soon as on promise in the array resolves or rejects.
 
-  -> It only cares about the first one, resolved or rejected.
+--> Hence the name "any". It is going to resolve with the value of the first promise that resolves or its fulfilled and it will only reject if every single promise in the array rejects.
+
+--> Another pattern where we don't care if one promise fails immediately, we only care if they all fail. 
+
+  - It is a race is some sense, but the difference is that the promise will only reject if all reject.
+
+    -> Promise.race() gives us the very first promise that can either be rejected of fulfilled, so it gives us the first settled promise.
+
+    -> Promise.any() waits for the very first promise that settles to fulfilled.
+
+
 
 */
 
 const BASE_URL = "https://pokeapi.co/api/v2/pokemon";
-const url = `${BASE_URL}/1`;
 
 const lotsOfFetchCalls = [
-  fetch(`${BASE_URL}/1`),
+  fetch(`http://nope.nope`),
+  fetch(`http://nope.nope`),
+  fetch(`http://nope.nope`),
+  fetch(`http://nope.nope`),
+  fetch(`http://nope.nope`),
+  fetch(`http://nope.nope`),
   fetch(`${BASE_URL}/2`),
-  fetch(`${BASE_URL}/3`),
-  fetch(`${BASE_URL}/4`),
-  fetch(`${BASE_URL}/5`),
-  fetch(`${BASE_URL}/6`),
+  // fetch(`${BASE_URL}/3`),
+  // fetch(`${BASE_URL}/4`),
+  // fetch(`${BASE_URL}/5`),
+  // fetch(`${BASE_URL}/6`),
 ];
 
-// With then()
-
-Promise.race(lotsOfFetchCalls)
-  .then((winner) => console.log(winner))
-  .catch((err) => console.error(err));
-
-// Async await
-
-async function winnerPokemon(proArr) {
-  const winner = await Promise.race(proArr);
-  console.log(winner);
+async function getAny(promiseArray) {
+  try {
+    const response = await Promise.any(promiseArray);
+    const data = await response.json();
+    console.log(data.name);
+  } catch (error) {
+    console.error("All promises rejected", error);
+  }
 }
-winnerPokemon(lotsOfFetchCalls);
+
+getAny(lotsOfFetchCalls);
