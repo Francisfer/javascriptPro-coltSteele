@@ -280,23 +280,3 @@ function solution(number) {
 }
 
 solution(20);
-
-function solution(number) {
-  if (number <= 3) return 0;
-
-  const numbersArr = Array.from({ length: number }, (_, i) => i + 1);
-
-  const maxArr = numbersArr.filter((current) => current * 3 < number);
-
-  const sum3 = maxArr.map((current) => current * 3);
-
-  const sum5 = maxArr
-    .filter((current) => current * 5 < number)
-    .map((current) => current * 5);
-
-  const final = Array.from(new Set([...sum3, ...sum5])).reduce(
-    (acc, current) => (acc += current)
-  );
-
-  return final;
-}
