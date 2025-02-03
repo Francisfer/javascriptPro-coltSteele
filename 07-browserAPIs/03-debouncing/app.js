@@ -37,9 +37,9 @@
 
 */
 
-function queryAPI() {
-  console.log("Making an API request!");
-}
+// function queryAPI() {
+//   console.log("Making an API request!");
+// }
 
 const searchInput = document.querySelector("#search");
 
@@ -80,18 +80,64 @@ const searchInput = document.querySelector("#search");
 
 */
 
+// function debounce(callback, delay) {
+//   let timeoutID;
+
+//   return function () {
+//     if (timeoutID) clearInterval(timeoutID);
+
+//     timeoutID = setTimeout(() => {
+//       callback();
+//     }, delay);
+//   };
+// }
+
+// const debouncedQueryAPI = debounce(queryAPI, 1000);
+
+// searchInput.addEventListener("input", debouncedQueryAPI);
+
+/* 
+
+--> At this point it works, but it is not perfect.
+
+  -> Having this functionality makes it so that we need what is actually being typed to make the query.
+
+  -> This means that we need to pass arguments into the callback.
+
+    -> Since these arguments are available on the event, we cannot use bind to pass the values as "this"
+
+
+*/
+
+function queryAPI(searchTerm, justToUnderstand) {
+  console.log(`Searching the API for: ${searchTerm}`);
+  console.log(justToUnderstand);
+}
+
 function debounce(callback, delay) {
   let timeoutID;
 
-  return function () {
+  // Arbitrary number of args, the rest syntax because we are assigning args. remember (puts the rest on an array)
+  return function (...args) {
     if (timeoutID) clearInterval(timeoutID);
 
     timeoutID = setTimeout(() => {
-      callback();
+      // Here we use the spread syntax so that the callback is called with the parameters that accepts, this is what makes the debounce function truly reusable.
+      callback(...args);
     }, delay);
   };
 }
 
 const debouncedQueryAPI = debounce(queryAPI, 1000);
 
-searchInput.addEventListener("input", debouncedQueryAPI);
+searchInput.addEventListener("input", (e) => {
+  debouncedQueryAPI(e.target.value, "Passing more than one argument");
+});
+
+// just to remember:
+
+function restSyntax(...args) {
+  console.log(...args);
+}
+
+restSyntax("hello", 2, "hi", undefined);
