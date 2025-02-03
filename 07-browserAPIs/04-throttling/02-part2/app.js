@@ -4,7 +4,13 @@
 
 /* 
 
---> 
+--> So, let's implement some throttling.
+
+  -> A throttled function will allow loadMoreItems() to proceed, but then prevent further calls for some amount of time.
+
+  -> This allows us to control the rate (throttle the rate) that this function proceeds at (the rate that this function executes at).
+
+  -> We want to load data one time, give the user time to make he's wat through all the content, read it, understand it and then load more when he gets to the bottom.
 */
 
 function getRandomColor() {
