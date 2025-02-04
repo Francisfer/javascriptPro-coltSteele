@@ -32,16 +32,19 @@ function smoothScrollToTop() {
 
   // Like before, state variable that stores startTime of the animation, so we can calculate how much time has passed between each animation frame (currentTime - startTime).
 
-  // We just need to store the value on click, so that we do the calculations
+  // We just need to store the start time of the animation on click. It will tell us how much time has elapsed in the animation.
   let startTime = null;
 
   // This is the function that does the animation itself.
   function animateScroll(currentTime) {
     if (startTime === null) startTime = currentTime;
 
-    // Time elapsed between each frame of the animation.
+    // Time elapsed is the number of milliseconds passed since the animation started. So, the time elapsed between each frame. gets updated at each function call.
     const timeElapsed = currentTime - startTime;
+
     console.log(currentTime, startTime, timeElapsed);
+
+    // This variable is going to calculate is going to calculate the progress of the as a fraction (decimal) between 1 and 0.
     const progress = Math.min(timeElapsed / duration, 1);
 
     window.scrollTo(0, start + change * progress);
@@ -57,3 +60,25 @@ function smoothScrollToTop() {
 document
   .querySelector(".back-to-top")
   .addEventListener("click", smoothScrollToTop);
+
+/* 
+  --> Chat gpt  
+*/
+
+// function smoothScrollToTopTenPercent() {
+//   function animateScroll() {
+//     const currentY = window.scrollY;
+//     const step = Math.max(10, currentY * 0.1); // Moves 10% of distance per frame
+//     window.scrollTo(0, currentY - step);
+
+//     if (currentY > 0) {
+//       requestAnimationFrame(animateScroll);
+//     }
+//   }
+
+//   requestAnimationFrame(animateScroll);
+// }
+
+// document
+//   .querySelector(".back-to-top")
+//   .addEventListener("click", smoothScrollToTopTenPercent);
