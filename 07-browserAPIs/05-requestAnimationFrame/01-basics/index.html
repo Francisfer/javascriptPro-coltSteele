@@ -6,11 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Framerate Comparison</title>
     <style>
+      .container {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10%;
+      }
+
       .box {
         width: 300px;
         height: 300px;
-        position: absolute;
-        top: 50%;
         transform-origin: 50% 50%;
         background-color: coral;
         text-align: center;
@@ -30,8 +37,10 @@
   </head>
 
   <body>
-    <div id="boxInterval" class="box">Interval</div>
-    <div id="boxAnimationFrame" class="box">AnimationFrame</div>
+    <div class="container">
+      <div id="boxInterval" class="box">Interval</div>
+      <div id="boxAnimationFrame" class="box">AnimationFrame</div>
+    </div>
 
     <script src="app.js"></script>
   </body>
