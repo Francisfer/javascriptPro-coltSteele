@@ -10,7 +10,7 @@
 
   -> This argument is a high resolution timestamp in milliseconds. It is not tied to any particular time or date.
 
-  -> Its sole purpose is to be use in calculating how much time has elapsed between animation frames.
+  -> Its sole purpose is to be used in calculating how much time has elapsed between animation frames.
 
   -> console.log(currentTime); -> a bunch of current timestamps that keeps increasing.
 
