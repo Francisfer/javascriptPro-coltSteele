@@ -58,20 +58,37 @@ function loadMoreItems() {
   }
 }
 
+// function throttle(callback, delay = 500) {
+//   let isThrottled = false;
+//   let savedArgs = null;
+
+//   const executeCallback = () => {
+//     if (savedArgs === null) {
+//       isThrottled = false;
+//     } else {
+//       callback(...savedArgs);
+//       savedArgs = null;
+//       setTimeout(executeCallback, delay);
+//     }
+//   };
+
+//   return (...args) => {
+//     if (isThrottled) {
+//       savedArgs = args;
+//       return;
+//     }
+
+//     callback(...args);
+//     isThrottled = true;
+//     setTimeout(executeCallback, delay);
+//   };
+// }
+
+// const throttledLoadItems = throttle(loadMoreItems, 300);
+
 let isThrottled = false;
 
 window.addEventListener("scroll", () => {
-  // The first thing to do is to implement some logic so that we don't call load items at each scroll event.
-  // For that we create an external state variable, check the state, if it is not throttled we call loadMoreItems, change the state to true and use a timeout to reset it to false after 300 milliseconds.
-
-  // With this, the very first time we scroll, is throttled will be false, so the code runs, we load more items but we immediately set is throttled to true.
-
-  // If the scroll event triggers again, the code won't run, it will only run after 300 milliseconds no matter if the scroll event occurs.
-
-  // Like this it works, however if we scroll fast to the bottom it won't load more data before the 300 mill.
-
-  // So we need to scroll up to trigger another load event for the items load.
-
   if (!isThrottled) {
     loadMoreItems();
     isThrottled = true;
