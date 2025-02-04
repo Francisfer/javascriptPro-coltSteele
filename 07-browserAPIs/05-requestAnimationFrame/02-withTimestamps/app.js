@@ -22,7 +22,11 @@
 
   -> However, if we need something to take exactly one second, imagine that we want the square to rotate for one second and then stop, we need to know how much time has passed between each frame.
 
+    -> MAYBE THIS HAS TO DO WITH DIFFERENT REFRESH RATES OF MONITORS, IN HIGH REFRESH RATE MONITORS, 1SECOND MIGHT BE FASTER, WHILE IN LOW REFRESH RATE MONITORS 1S MIGHT BE SLOWER.
+
   -> Remember that this is different for users due to all the variables that we've mentioned. That is why we need to get this time dynamically.
+
+  -> We will see in the next part what exactly does he mean by: using this time to make the animation duration TO BE 1S.
 
 */
 
@@ -34,7 +38,11 @@ let animationFrameAngle = 0;
 let previousTime;
 
 function animateWithAnimationFrame(currentTime) {
-  // We can capture the argument that request animation frame passes when it calls this callback function.
+  // To know how much time has passed, we need some logic.
+
+  // console.log(currentTime - previousTime); // First log is NaN because we are subtracting currentT - undefined.
+
+  previousTime = currentTime;
 
   boxAnimationFrame.style.transform = `rotate(${String(
     animationFrameAngle
@@ -44,4 +52,4 @@ function animateWithAnimationFrame(currentTime) {
   requestAnimationFrame(animateWithAnimationFrame); // Passes an argument that we can capture
 }
 
-requestAnimationFrame(animateWithAnimationFrame);
+// requestAnimationFrame(animateWithAnimationFrame);
