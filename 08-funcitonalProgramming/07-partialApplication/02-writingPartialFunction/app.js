@@ -41,7 +41,7 @@ double(4); // 8
 function partial(fn, ...fixedArgs) {
   return function (...remainingArgs) {
     return fn(...fixedArgs, ...remainingArgs);
-    return multiply(2, ...remainingArgs);
+    // return multiply(2, ...remainingArgs);
   };
 }
 
@@ -54,6 +54,8 @@ console.log(triple(2)); // 6
 --> Another example:
 
   -> params is an object.
+
+  -> This allows us to reuse functions, make copies and versions of functions that we can use in different situations.
 
 */
 
@@ -76,3 +78,26 @@ fetchData(myApiUrl, myApiKey, { option: 2, something: "ghs" });
 
 const googleApiKey = "google-secret-api-key";
 const googleApiUrl = "https://api.google.com/data";
+
+// What we can do is to use the partial function to bake in the api key and the url. Like that, we get a function for my website and another for google. Leaving the params as the remaining arguments
+
+const fetchMyApi = partial(fetchData, myApiUrl, myApiKey);
+
+const fetchGoogleApi = partial(fetchData, googleApiUrl, googleApiKey);
+
+fetchMyApi({ id: 11111, sort: "descending" }); // Sending request to https://api.mywebsite.com/data?id=11111&sort=descending
+
+fetchGoogleApi({ search: "polly" }); // Sending request to https://api.google.com/data?search=polly
+
+// Another example, using different versions of the same functionality with taxes.
+
+function calculateTax(rate, amount) {
+  const total = amount * rate;
+  const rounded = total.toFixed(2);
+  return Number(rounded);
+}
+
+const calculateCAsalesTax = partial(calculateTax, 0.07);
+const calculateNJsalesTax = partial(calculateTax, 0.06);
+
+calculateCAsalesTax(3450); // 241.5
