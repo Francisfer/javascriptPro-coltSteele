@@ -1,30 +1,30 @@
-class DiceGame {
-  constructor(rollBtnId, resultDisplayId, userName) {
-    this.rollBtn = document.getElementById(rollBtnId);
-    this.resultDisplay = document.getElementById(resultDisplayId);
-    this.userName = userName;
+"use strict";
 
-    this.rollBtn.addEventListener("click", this.rollDice.bind(this));
-  }
+/* 
 
-  getRandomRoll() {
-    return Math.floor(Math.random() * 6 + 1);
-  }
+--> Now we are going to write a functional programming version of the dice game.
 
-  checkWin(roll) {
-    return roll === 6;
-  }
 
-  rollDice() {
-    const roll = this.getRandomRoll();
-    console.log(roll);
+*/
 
-    if (this.checkWin(roll)) {
-      this.resultDisplay.textContent = `You rolled a ${roll} ${this.userName}. You win!!!`;
-    } else {
-      this.resultDisplay.textContent = `You rolled a ${roll} ${this.userName}. Try again!`;
-    }
-  }
-}
+const getRandomRoll = () => Math.floor(Math.random() * 6 + 1);
+const checkWin = (roll) => roll === 6;
 
-let newGame = new DiceGame("rollBtn", "result", "Francis");
+const rollDiceAndDisplayResult = (resultDisplay) => {
+  const roll = getRandomRoll();
+  console.log(resultDisplay);
+  resultDisplay.textContent = `You rolled a ${roll}! ${
+    roll === 6 ? "You Win!!!" : "Keep trying!"
+  }`;
+};
+
+const createDiceGame = (rollBtnId, resultDisplayId) => {
+  const rollBtn = document.getElementById(rollBtnId);
+  const resultDisplay = document.getElementById(resultDisplayId);
+  rollBtn.addEventListener(
+    "click",
+    rollDiceAndDisplayResult.bind(null, resultDisplay)
+  );
+};
+
+createDiceGame("rollBtn", "result");
