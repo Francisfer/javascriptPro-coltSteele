@@ -26,6 +26,7 @@
 
 const btn = document.querySelector("#startStream");
 const videoElement = document.querySelector("#videoElement");
+const errorElement = document.querySelector("#errText");
 
 btn.addEventListener("click", async () => {
   try {
@@ -36,5 +37,17 @@ btn.addEventListener("click", async () => {
     videoElement.srcObject = stream;
   } catch (error) {
     console.error(error.message);
+    errorElement.textContent = error.message;
   }
 });
+
+// To access the media devices of the user. We can let them choose or set a default. See mdn.
+
+// enumerateDevices() returns an array that we can loop over.
+
+// navigator.mediaDevices
+//   .enumerateDevices()
+//   .then((devices) => {
+//     console.log(devices); // array of possible devices
+//   })
+//   .catch((err) => console.error(err));
