@@ -38,6 +38,8 @@
   -> The reduce right is used so that the mathematical expressions order stays the same.
 
   -> The use of data as the initial value of the accumulator (val) allows us to pass the data for the first iteration, then it changes as the result value of each function works the data up to the end.
+
+  -> It is there for educational purpose, 
 */
 
 function compose(...functions) {
