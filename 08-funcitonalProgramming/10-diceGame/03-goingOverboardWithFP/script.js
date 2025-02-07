@@ -31,13 +31,9 @@ const partial = function (fn, ...fixedArgs) {
 // New compose function - since we don't give an initial value for the acc, it defaults to the last function in the array, and the current defaults to the second to last function in the array.
 
 const compose = function (...fns) {
-  return fns.reduce((lastFn, secondToLastFn) => {
+  return fns.reduceRight((lastFn, secondToLastFn) => {
     return function (...args) {
       return lastFn(secondToLastFn(...args));
-      // [fn1, fn2, fn3, fn4]
-      // -> Iteration 1 fn4(fn3(...args))
-      // -> Iteration 2 fn1(fn2(result of first iteration))
-      // -> The whole process -> fn1(fn2(fn3(fn4(...args))))
     };
   });
 };
@@ -68,7 +64,6 @@ const createDiceGame = (rollBtnId, resultDisplayId) => {
   // getRandomRoll passes the roll to create message, which passes the message to show result.
   const playGame = compose(getRandomRoll, createMessage, showResult);
 
-  console.log(playGame());
   // Now all we need to do is to pass playGame as the callback
   rollBtn.addEventListener("click", playGame);
 };
