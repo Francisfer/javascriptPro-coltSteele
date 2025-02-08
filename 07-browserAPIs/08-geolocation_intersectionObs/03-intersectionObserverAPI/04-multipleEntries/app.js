@@ -4,37 +4,35 @@
 
 /* 
 
---> 
-*/
+--> Now let's observe two boxes, each has a different id, but the same class.
 
-// TRACKING HOW LONG AN AD IS VISIBLE
+  -> The id is used to apply some styles, but we are going to use it to know which one is intersecting.
+
+  -> To make the match logic, we use the target property of the entry object.
+
+  -> The target is the element that is currently intersecting.
+*/
 
 const observer = new IntersectionObserver(
   (entries) => {
-    entries.forEach((entry) => {});
+    entries.forEach((entry) => {
+      const { isIntersecting } = entry;
+
+      // The target has the classList, the className (useful if we only have one class) and the id.
+      const { id } = entry.target;
+
+      if (isIntersecting) {
+        console.log(`${id} ad is visible`);
+      } else {
+        console.log(`${id} ad is not visible`);
+      }
+    });
   },
   {
     threshold: [0.5],
   }
 );
 
-const ad = document.querySelector(".ad");
-observer.observe(ad);
+const ads = document.querySelectorAll(".ad");
 
-// const observer = new IntersectionObserver(
-//   (entries) => {
-//     entries.forEach((entry) => {
-//       const { isIntersecting } = entry;
-//       const { id } = entry.target;
-//       if (isIntersecting) {
-//         console.log(`${id} ad is visible`);
-//       } else {
-//         console.log(`${id} ad is NOT visible`);
-//       }
-//     });
-//   },
-//   { threshold: 0.5 }
-// );
-
-// const ads = document.querySelectorAll(".ad");
-// ads.forEach((ad) => observer.observe(ad));
+ads.forEach((ad) => observer.observe(ad));
